@@ -39,7 +39,7 @@ export const titlesArray = [
 export const typesArray = [
     "palace",
     "flat",
-    "house ",
+    "house",
     "bungalow"
 ];
 export const checkinsArray = [
@@ -76,3 +76,10 @@ export const photosArray = [
     "http://o0.github.io/assets/images/tokyo/hotel2.jpg",
     "http://o0.github.io/assets/images/tokyo/hotel3.jpg"
 ]
+
+export const typesObject = {
+    palace: "Палац",
+    flat: "Квартира",
+    house: "Будинок",
+    bungalow: "Бунгало"
+};

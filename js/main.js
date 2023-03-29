@@ -1,3 +1,4 @@
 import {data} from "./data.js";
+import {getCard} from "./cardGenerate.js";
 
-console.log(data)
+getCard(data);
