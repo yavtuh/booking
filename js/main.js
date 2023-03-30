@@ -1,6 +1,7 @@
 import {data} from "./data.js";
-import {renderCards} from "./cardGenerate.js";
-import "./validation.js";
+import {validate} from "./validation.js";
+import {getMap} from "./map.js"
 
-
-renderCards(data);
+console.log(data);
+getMap(data);
+validate();

@@ -1,4 +1,5 @@
 import {typesObject, priceInput as constPriceInput, roomsGuests, guestsRooms} from "./constants.js";
+import {addDisabledOptions, removeDisabledOptions} from "./utils.js"
 
 const form = document.querySelector(".ad-form");
 const priceInput = form.querySelector("#price");
@@ -7,7 +8,7 @@ const guestsSelect = form.querySelector("#capacity");
 const timeInSelect = form.querySelector("#timein");
 const timeOutSelect = form.querySelector("#timeout");
 
-function validate(){
+export function validate(){
 
 }
 
@@ -15,18 +16,6 @@ function setDataPriceInput(value){
     constPriceInput.min = typesObject[value].minPrice;
     priceInput.placeholder = constPriceInput.min;
     priceInput.value = '';
-}
-
-function addDisabledOptions(options){
-    for(let i = 0; i<options.length; i++){
-        options[i].disabled = true;
-    }
-}
-
-function removeDisabledOptions(options){
-    for(let i = 0; i<options.length; i++){
-        options[i].disabled = false;
-    }
 }
 
 function setOptionsRoomsGuests(value, select, setting){
@@ -84,4 +73,5 @@ form.addEventListener("input", checkInput);
 window.addEventListener("load", (e) => {
     priceInput.placeholder = constPriceInput.min;
     setOptionsRoomsGuests(roomsSelect.value, guestsSelect, roomsGuests);
+    
 });
