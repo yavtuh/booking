@@ -41,7 +41,7 @@ function cardGenerate(cardArray){
         cardAvatar.src = cardArray.author.avatar;
         cardAdrress.innerText = cardArray.offer.address;
         cardPrice.innerHtml = `${cardArray.offer.price} <span>грн/ніч</span>`;
-        cardType.innerText = typesObject[cardArray.offer.type];
+        cardType.innerText = typesObject[cardArray.offer.type].name;
         cardCapacity.innerText = `${cardArray.offer.rooms} кімнати для ${cardArray.offer.guests} гостей`;
         cardTime.innerText = `Заїзд після ${cardArray.offer.checkin}, виїзд до ${cardArray.offer.checkout}`;
         cardFeatures.replaceChildren(featuresGenerate(cardArray.offer.features));
@@ -49,7 +49,7 @@ function cardGenerate(cardArray){
         cardPhotos.replaceChildren(photosGenerate(cardArray.offer.photos));
         cardFragment.appendChild(card.cloneNode(true));
 }
-export function getCard(cardsArrays){
+export function renderCards(cardsArrays){
     cardsArrays.forEach((cardArray) => cardGenerate(cardArray));
     mapCanvas.appendChild(cardFragment)
 }

@@ -1,4 +1,6 @@
 import {data} from "./data.js";
-import {getCard} from "./cardGenerate.js";
+import {renderCards} from "./cardGenerate.js";
+import "./validation.js";
 
-getCard(data);
+
+renderCards(data);
