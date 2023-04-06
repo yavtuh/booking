@@ -1,9 +1,7 @@
 import {typesObject} from "./constants.js";
 
-const mapCanvas = document.querySelector("#map-canvas");
 const cardTemplate = document.querySelector("#card");
 const card = cardTemplate.content.cloneNode(true);
-const cardFragment = new DocumentFragment;
 const cardTitle = card.querySelector(".popup__title");
 const cardAvatar = card.querySelector(".popup__avatar");
 const cardAdrress = card.querySelector(".popup__text--address");
@@ -35,12 +33,13 @@ function photosGenerate(array){
     return photosFragment;
 }
 
-function cardGenerate(cardArray){
-    
+export function cardGenerate(cardArray){
+        console.log(cardArray.offer.price)
+        const cardFragment = new DocumentFragment;
         cardTitle.innerText = cardArray.offer.title;
         cardAvatar.src = cardArray.author.avatar;
         cardAdrress.innerText = cardArray.offer.address;
-        cardPrice.innerHtml = `${cardArray.offer.price} <span>грн/ніч</span>`;
+        cardPrice.innerHTML = `${cardArray.offer.price} <span>грн/ніч</span>`;
         cardType.innerText = typesObject[cardArray.offer.type].name;
         cardCapacity.innerText = `${cardArray.offer.rooms} кімнати для ${cardArray.offer.guests} гостей`;
         cardTime.innerText = `Заїзд після ${cardArray.offer.checkin}, виїзд до ${cardArray.offer.checkout}`;
@@ -48,10 +47,5 @@ function cardGenerate(cardArray){
         cardDescription.innerText = cardArray.offer.description;
         cardPhotos.replaceChildren(photosGenerate(cardArray.offer.photos));
         cardFragment.appendChild(card.cloneNode(true));
+        return cardFragment;
 }
-export function renderCards(cardsArrays){
-    cardsArrays.forEach((cardArray) => cardGenerate(cardArray));
-    mapCanvas.appendChild(cardFragment)
-}
-
-

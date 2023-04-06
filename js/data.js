@@ -24,7 +24,6 @@ function generateOffer(index){
                 y: functions.getRandomFloat(constants.locationYValues.min, constants.locationYValues.max)
             }
         },
-       
     }
 }
 

@@ -113,11 +113,3 @@ export const guestsRooms = {
     2:[1,2],
     3:[1,2,3]
 }
-
-// export const timeInTimOut = {
-//     "12:00":
-// }
-
-// export const timeOutTimeIn = {
-
-// }
