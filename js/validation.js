@@ -3,14 +3,12 @@ import {addDisabledOptions, removeDisabledOptions} from "./utils.js"
 
 const form = document.querySelector(".ad-form");
 const priceInput = form.querySelector("#price");
+const titleInput = form.querySelector("#title");
 const roomsSelect = form.querySelector("#room_number");
 const guestsSelect = form.querySelector("#capacity");
 const timeInSelect = form.querySelector("#timein");
 const timeOutSelect = form.querySelector("#timeout");
 
-export function validate(){
-
-}
 
 function setDataPriceInput(value){
     constPriceInput.min = typesObject[value].minPrice;
@@ -30,7 +28,7 @@ function setOptionsRoomsGuests(value, select, setting){
 function setOptionsTimes(value, select){
     select.value = value;
 }
-/* я сделал случайно валидацию Комнаты - Гости на прошлом дз */
+
 function checkSelect(e){
     switch (e.target.id) {
         case "type":
@@ -69,29 +67,44 @@ function isValidTitle(title){
     return flag;
 }
 
-function checkInput(e){
-    e.target.setCustomValidity("");
-    if(e.target.id === "price"){
-        e.target.setCustomValidity("");
-        console.log(constPriceInput.min)
-        if(e.target.value < constPriceInput.min){
-            e.target.setCustomValidity(`Мінімальна ціна за ніч ${constPriceInput.min}`);
-        }
+function checkPrice(input){
+    input.setCustomValidity("");
+    if(input.value < constPriceInput.min){
+        input.setCustomValidity(`Мінімальна ціна за ніч ${constPriceInput.min}`);
     }
-    if(e.target.id === "title"){
-        console.log(isValidTitle(e.target.value))
-        if(e.target.value.length < 5){
-            e.target.setCustomValidity(`Мінімальна довжина заголовку 5`);
-        } else if(!isValidTitle(e.target.value)){
-            e.target.setCustomValidity(`Заголовок повиннен починатися з великої літери і без спецсимволів(;₴'?:%*)`);
-        }
-        
-    }
-    e.target.reportValidity();
+    return input.reportValidity();
 }
 
+function checkTitle(input){
+    input.setCustomValidity("");
+    if(input.value.length < 5){
+        input.setCustomValidity(`Мінімальна довжина заголовку 5`);
+    } else if(!isValidTitle(input.value)){
+        input.setCustomValidity(`Заголовок повиннен починатися з великої літери і без спецсимволів(;₴'?:%*)`);
+    }
+    return input.reportValidity();
+}
+
+
+export function validate(){
+    if(!checkTitle(titleInput)){
+        return false;
+    }else if(!checkPrice(priceInput)){
+        return false;
+    }
+    return true;
+}
+
+
+
 form.addEventListener("change", checkSelect);
-form.addEventListener("input", checkInput);
+titleInput.addEventListener("input", function(e){
+    checkTitle(e.target);
+});
+priceInput.addEventListener("input", function(e){
+    checkPrice(e.target);
+})
+
 window.addEventListener("load", (e) => {
     priceInput.placeholder = constPriceInput.min;
     setOptionsRoomsGuests(roomsSelect.value, guestsSelect, roomsGuests);
