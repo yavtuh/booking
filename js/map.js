@@ -2,9 +2,10 @@ import {toggleDisabledForm} from "./utils.js"
 import {cardGenerate} from "./cardGenerate.js";
 
 const form = document.querySelector(".ad-form");
+const formFilters = document.querySelector(".map__filters");
 const inputAddress = form.querySelector("#address");
 toggleDisabledForm(form.elements, true);
-
+toggleDisabledForm(formFilters.elements, true);
 
      const map = L.map('map-canvas').on("load", function(e) {
         toggleDisabledForm(form.elements, false);
@@ -33,7 +34,6 @@ toggleDisabledForm(form.elements, true);
     .addTo(map);
     
 export function getMap(data){
-    console.log(data)
     try {
         data.forEach((item) => { 
             new L.marker([item.offer.location.x, item.offer.location.y],{icon: blueIcon})
@@ -43,6 +43,7 @@ export function getMap(data){
             })
             .addTo(map);
         });
+        toggleDisabledForm(formFilters.elements, false);
     } catch (error) {
         console.log(error);
     }
