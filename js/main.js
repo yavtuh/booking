@@ -1,7 +1,8 @@
-import {data} from "./data.js";
-import {validate} from "./validation.js";
-import {getMap} from "./map.js"
+import {getOffers} from "./getoffers.js";
+import  "./sendoffer.js";
+import {getMap} from "./map.js";
 
-console.log(data);
+const data = await getOffers();
+
 getMap(data);
-validate();
+

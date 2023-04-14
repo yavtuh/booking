@@ -5,8 +5,8 @@ const form = document.querySelector(".ad-form");
 const inputAddress = form.querySelector("#address");
 toggleDisabledForm(form.elements, true);
 
-export function getMap(data){
-    const map = L.map('map-canvas').on("load", function(e) {
+
+     const map = L.map('map-canvas').on("load", function(e) {
         toggleDisabledForm(form.elements, false);
         inputAddress.setAttribute("readonly", true);
         inputAddress.value = `${e.target._lastCenter.lat}, ${e.target._lastCenter.lng}`;
@@ -25,22 +25,27 @@ export function getMap(data){
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     
-    L.marker([35.67000, 139.80000],{icon: myIcon, draggable:true})
+    export const myMarker = L.marker([35.67000, 139.80000],{icon: myIcon, draggable:true})
     .on("drag", function(e){
         const latLng = e.target.getLatLng();
         inputAddress.value = `${latLng.lat}, ${latLng.lng}`;
     })
     .addTo(map);
     
-    
-    data.forEach((item) => { 
-        new L.marker([item.offer.location.x, item.offer.location.y],{icon: blueIcon})
-        .bindPopup(cardGenerate(item))
-        .on("click", function(e){
-            e.target.bindPopup(cardGenerate(item));
-        })
-        .addTo(map);
-    });
+export function getMap(data){
+    console.log(data)
+    try {
+        data.forEach((item) => { 
+            new L.marker([item.offer.location.x, item.offer.location.y],{icon: blueIcon})
+            .bindPopup(cardGenerate(item))
+            .on("click", function(e){
+                e.target.bindPopup(cardGenerate(item));
+            })
+            .addTo(map);
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
