@@ -1,5 +1,7 @@
 import {validate} from "./validation.js";
 import {myMarker, getMap} from "./map.js";
+import {getDataFilters} from "./filter.js"
+
 const form = document.querySelector(".ad-form");
 const titleForm = form.querySelector("#title");
 const addressForm = form.querySelector("#address");
@@ -33,6 +35,7 @@ async function sendForm(e){
             console.log(result);
             myMarker.setLatLng([35.67000, 139.80000]).update();
             getMap(result);
+            getDataFilters(result);
             form.reset();
         })
         .catch((error) => {
