@@ -1,61 +1,66 @@
+import {getMap} from "./map.js";
+import {filtersObject, countShowFilter, settingPrice} from "./constants.js";
 const formFilters = document.querySelector(".map__filters");
-const formFiltersType = formFilters.querySelector("#housing-type");
-const formFiltersPrice = formFilters.querySelector("#housing-price");
-const formFiltersRooms = formFilters.querySelector("#housing-rooms");
-const formFiltersGuests = formFilters.querySelector("#housing-guests");
-const formFiltersCheckBox = formFilters.querySelectorAll(".map__checkbox");
-const filtersObject = {
-    type:"any",
-    price:"any",
-    rooms:"any",
-    guests:"any",
-    features:[]
-};
-const settingPrice = {
-    middle:{
-        min: 10000,
-        max: 50000
-    },
-    low: {
-        min: 0,
-        max: 10000
-    },
-    high: {
-        min:50000,
-        max: Infinity
-    }
-};
-let dataFilter, dataMain, countFilters;
+
+let dataFilter;
 
 export function getDataFilters(data){
     if(data){
-        dataFilter =  data.slice(0);
-        dataMain = data;
+        dataFilter =  data;
     } else{
         console.log("Не прийшли данні з серверу")
     }
 }
 
-function isFilterArray(offer){
+function roomsFilter(offer){
+    if(filtersObject.rooms !== "any"){
+        return offer.offer.rooms === Number(filtersObject.rooms);
+    } else {
+        return offer
+    }
+}
 
-    for (const filterObject in filtersObject) {
-        if(filtersObject[filterObject].length !== 0 && filtersObject[filterObject] !== "any"){
-            console.log(`${filterObject}: ${filtersObject[filterObject]}`);
-            // if(filterObject === "price"){
-            //     return 
-            // }
-            return offer[filterObject].every((key) => offer[key] === filtersObject[filterObject])
-            // return offer.keys(this).every((key) => user[key] === this[key])
-        }
+function typeFilter(offer){
+    if(filtersObject.type !== "any"){
+        return offer.offer.type === filtersObject.type;
+    } else{
+        return offer
+    }
+}
+
+function priceFilter(offer){
+    if(filtersObject.price !== "any"){
+        return offer.offer.price > settingPrice[filtersObject.price].min && offer.offer.price < settingPrice[filtersObject.price].max;
+    } else{
+        return offer
+    }
+}
+
+function guestsFilter(offer){
+    if(filtersObject.guests !== "any"){
+        return offer.offer.guests === Number(filtersObject.guests);
+    } else{
+        return offer
+    }
+}
+
+function featuresFilter(offer){
+    if(filtersObject.features.length !== 0){
+        return filtersObject.features.every(item => offer.offer.features.includes(item))
+    } else{
+        return offer
     }
 }
 
 function filter(){
-    console.log(filtersObject);
-    const filtersArray = dataFilter.slice(0).filter((item) => isFilterArray((item.offer)));
-    console.log(filtersArray, dataFilter);
+    const filtersArray = dataFilter.slice(0)
+    .filter(typeFilter)
+    .filter(roomsFilter)
+    .filter(priceFilter)
+    .filter(guestsFilter)
+    .filter(featuresFilter);
+    getMap(filtersArray.slice(0, countShowFilter))
 }
-
 
 function toggleDataCheckbox(checkbox){
     if(checkbox.checked){

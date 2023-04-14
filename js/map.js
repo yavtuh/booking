@@ -12,7 +12,7 @@ toggleDisabledForm(formFilters.elements, true);
         inputAddress.setAttribute("readonly", true);
         inputAddress.value = `${e.target._lastCenter.lat}, ${e.target._lastCenter.lng}`;
     }).setView([35.67000, 139.80000], 13);
-    
+    const featureGroup = L.featureGroup();
     const myIcon = L.icon({
         iconUrl : "/img/main-pin.svg",
         iconSize:35
@@ -33,16 +33,19 @@ toggleDisabledForm(formFilters.elements, true);
     })
     .addTo(map);
     
+    
 export function getMap(data){
     try {
+        featureGroup.clearLayers();
         data.forEach((item) => { 
             new L.marker([item.offer.location.x, item.offer.location.y],{icon: blueIcon})
             .bindPopup(cardGenerate(item))
             .on("click", function(e){
                 e.target.bindPopup(cardGenerate(item));
             })
-            .addTo(map);
+            .addTo(featureGroup);
         });
+        featureGroup.addTo(map);
         toggleDisabledForm(formFilters.elements, false);
     } catch (error) {
         console.log(error);
