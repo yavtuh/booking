@@ -34,7 +34,6 @@ function photosGenerate(array){
 }
 
 export function cardGenerate(cardArray){
-        console.log(cardArray.offer.price)
         const cardFragment = new DocumentFragment;
         cardTitle.innerText = cardArray.offer.title;
         cardAvatar.src = cardArray.author.avatar;
